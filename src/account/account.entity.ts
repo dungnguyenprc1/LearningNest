@@ -1,25 +1,34 @@
+import { Exclude } from 'class-transformer';
 import { User } from 'src/auth/user.entity';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 // @EntityRepository()
 @Entity()
 export class Account {
   @PrimaryGeneratedColumn('uuid')
   userId: string;
-  @Column()
+  @Column({ nullable: true })
   mobileNo: string;
-  @Column()
+  @Column({ nullable: true })
   fullName: string;
-  @Column()
+  @Column({ nullable: true })
   membershipType: string;
-  @Column()
+  @Column({ nullable: true })
   expiredDate: Date;
-  @Column()
-  userName: string;
-  @Column()
+  @Column({ nullable: true })
+  username: string;
+  @Column({ nullable: true })
   dateOfBirth: Date;
-  @Column()
+  @Column({ nullable: true })
   salutation: string;
-  @OneToOne((_type) => User, (user) => user.account)
+  @OneToOne((_type) => User, (user) => user.userId, { cascade: true })
+  @JoinColumn({ name: 'userId' })
+  @Exclude({ toPlainOnly: true })
   user: User;
 }

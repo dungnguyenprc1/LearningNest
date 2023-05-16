@@ -12,12 +12,15 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './jwt-payload.interface';
+import { query } from 'express';
+import { Account } from 'src/account/account.entity';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+
     private jwtService: JwtService,
   ) {}
   async createUser(authCredentialsDto: AuthCredentialsDto): Promise<void> {
@@ -45,6 +48,17 @@ export class AuthService {
       dateOfBirth,
       statusMembership,
     });
+
+    // const profile = this.accountRepository.create({
+    //   mobileNo,
+    //   fullName,
+    //   membershipType,
+    //   expiredDate,
+    //   username,
+    //   user,
+    //   salutation,
+    //   dateOfBirth,
+    // });
     try {
       await this.userRepository.save(user);
     } catch (err) {

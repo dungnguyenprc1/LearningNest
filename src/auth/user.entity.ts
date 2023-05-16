@@ -39,10 +39,10 @@ export class User {
   designation: string;
   @OneToMany((_task) => Task, (task) => task.user, { eager: true })
   task: Task[];
-  @OneToOne((_type) => Account, (account) => account.user, {
-    cascade: true,
-    // eager: true,
-  })
-  @JoinColumn()
-  account: Account;
+  // @OneToOne(() => Account, (account) => account.userId, {
+  //   cascade: true,
+  //   eager: true,
+  // })
+  // @JoinColumn()
+  // account: Account;
 }
